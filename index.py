@@ -16,7 +16,8 @@ def executar(opcao):
         sair = False
         while not sair:
             empresa = input("Digite qual CNPJ deseja verificar: ")
-            req = requisicao(empresa)
+            cnpjTratado = tratarCNPJ(empresa)
+            req = requisicao(cnpjTratado)
             if req['status'] == "ERROR":
                 print(req['message'])
             else:
@@ -39,6 +40,13 @@ def requisicao(cnpj):
     except:
         print("Erro de conexão")
         return None
+
+
+def tratarCNPJ(cnpj):
+    cnpj = cnpj.replace(".", "")
+    cnpj = cnpj.replace("/", "")
+    cnpj = cnpj.replace("-", "")
+    return cnpj
 
 
 def armazenar_dados_tabela(dados):
